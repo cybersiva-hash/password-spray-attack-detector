@@ -51,5 +51,6 @@ def analyze_log_file(file_path):
 
 
 # Run detection
-log_file = "login_logs.txt"
+log_file = "login_logs.csv"
 analyze_log_file(log_file)
+
