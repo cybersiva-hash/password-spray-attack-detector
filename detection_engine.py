@@ -1,56 +1,50 @@
-import time
-import collections
+import csv
+from collections import defaultdict
 
-THRESHOLD = 5
-WINDOW_SECONDS = 60
+LOG_FILE = "login_logs.csv"
 
-attempts_tracker = collections.defaultdict(set)
-start_time = time.time()
-
-def process_login_event(ip_address, username, status):
-    """
-    Detect password spraying from log events.
-    """
-    global start_time
-
-    # Reset detection window if time exceeds
-    if time.time() - start_time > WINDOW_SECONDS:
-        attempts_tracker.clear()
-        start_time = time.time()
-
-    # Check failed login attempts
-    if status.upper() == "FAILED":
-        attempts_tracker[ip_address].add(username)
-
-        # Check threshold
-        if len(attempts_tracker[ip_address]) >= THRESHOLD:
-            print(f"[!] ALERT: Potential Password Spray detected from {ip_address}")
-            print(f"Targeted users: {list(attempts_tracker[ip_address])}")
-            return True
-
-    return False
+THRESHOLD = 3
 
 
-def analyze_log_file(file_path):
-    """
-    Reads log file and analyzes login events.
-    """
+def detect_password_spray():
+    password_users = defaultdict(set)
+
     try:
-        with open(file_path, "r") as file:
-            for line in file:
-                parts = line.strip().split(",")
+        with open(LOG_FILE, "r") as file:
+            reader = csv.DictReader(file)
 
-                if len(parts) != 3:
-                    continue
+            for row in reader:
+                username = row["username"]
+                password = row["password"]
+                status = row["status"]
 
-                ip, username, status = parts
-                process_login_event(ip, username, status)
+                if status == "FAIL":
+                    password_users[password].add(username)
+
+        attacks_detected = []
+
+        for password, users in password_users.items():
+            if len(users) >= THRESHOLD:
+                attacks_detected.append((password, list(users)))
+
+        return attacks_detected
 
     except FileNotFoundError:
-        print("Error: Log file not found.")
+        print("Error: login_logs.csv not found. Run attack_simulation.py first.")
+        return []
 
 
-# Run detection
-log_file = "login_logs.csv"
-analyze_log_file(log_file)
+if __name__ == "__main__":
+    results = detect_password_spray()
 
+    if results:
+        print("\n⚠ Password Spray Attack Detected!\n")
+
+        for password, users in results:
+            print("Suspicious Password:", password)
+            print("Number of Users Targeted:", len(users))
+            print("Users:", ", ".join(users))
+            print("-" * 40)
+
+    else:
+        print("No password spray attack detected.")
