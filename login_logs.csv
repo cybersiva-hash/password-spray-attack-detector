@@ -1,0 +1,13 @@
+timestamp,username,password,status
+2026-03-05T10:00:01,alice,hello123,FAIL
+2026-03-05T10:00:02,bob,test@1,FAIL
+2026-03-05T10:00:03,charlie,pass123,FAIL
+2026-03-05T10:00:04,david,hello123,FAIL
+2026-03-05T10:00:05,eva,test@1,FAIL
+2026-03-05T10:00:06,frank,pass123,FAIL
+2026-03-05T10:00:10,alice,Password@123,FAIL
+2026-03-05T10:00:11,bob,Password@123,FAIL
+2026-03-05T10:00:12,charlie,Password@123,FAIL
+2026-03-05T10:00:13,david,Password@123,FAIL
+2026-03-05T10:00:14,eva,Password@123,FAIL
+2026-03-05T10:00:15,frank,Password@123,FAIL
