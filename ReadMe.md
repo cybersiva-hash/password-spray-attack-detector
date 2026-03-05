@@ -1,6 +1,6 @@
-***Password Spray Attack Detection***
+# Password Spray Attack Detection
 
-Project Overview
+## Project Overview
 
 This project detects Password Spray Attacks by analyzing login attempt logs using Python.
 A password spray attack occurs when an attacker tries the same password across multiple user accounts to avoid account lockouts.
@@ -9,7 +9,7 @@ The system simulates login attempts, analyzes authentication logs, and detects s
 
 ---
 
-Features
+## Features
 
 - Simulates login attempts (normal and malicious)
 - Generates authentication log files
@@ -18,8 +18,8 @@ Features
 
 ---
 
-Project Structure
-
+## Project Structure
+''' text
 password_spray_project/
 │
 ├── attack_simulation.py     # Generates login logs
@@ -27,10 +27,10 @@ password_spray_project/
 ├── reporting.py             # Displays attack alerts and summary
 ├── login_logs.csv           # Log file containing login attempts
 └── README.md                # Project documentation
-
+'''
 ---
 
-Technologies Used
+## Technologies Used
 
 - Python
 - CSV log analysis
@@ -38,7 +38,7 @@ Technologies Used
 
 ---
 
-How the Project Works
+## How the Project Works
 
 1. Attack Simulation
 
@@ -73,7 +73,7 @@ Detection rule:
 
 ---
 
-Requirements
+## Requirements
 
 - Python 3.7 or higher
 
@@ -83,7 +83,7 @@ pip install matplotlib
 
 ---
 
-How to Run the Project
+## How to Run the Project
 
 Step 1: Generate Logs
 
@@ -99,23 +99,8 @@ python reporting.py
 
 ---
 
-Example Output
-
-Password Spray Attack Detected!
-
-Suspicious Password: Password@123
-Users affected: alice, bob, charlie, david
-
----
-
-Learning Objectives
+##Learning Objectives
 
 - Understand password spray attacks
 - Learn log analysis for security monitoring
 - Implement simple cybersecurity detection techniques using Python
-
----
-
-Author
-
-Cybersecurity Mini Project
