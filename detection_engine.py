@@ -1,43 +1,55 @@
-import collections
 import time
+import collections
 
-
-THRESHOLD = 5  
-WINDOW_SECONDS = 60  
-
+THRESHOLD = 5
+WINDOW_SECONDS = 60
 
 attempts_tracker = collections.defaultdict(set)
 start_time = time.time()
 
 def process_login_event(ip_address, username, status):
     """
-    Analyzes login events to detect password spraying.
+    Detect password spraying from log events.
     """
     global start_time
-    
-    
+
+    # Reset detection window if time exceeds
     if time.time() - start_time > WINDOW_SECONDS:
         attempts_tracker.clear()
         start_time = time.time()
 
-    if status == "FAILED":
+    # Check failed login attempts
+    if status.upper() == "FAILED":
         attempts_tracker[ip_address].add(username)
-        
-        
+
+        # Check threshold
         if len(attempts_tracker[ip_address]) >= THRESHOLD:
             print(f"[!] ALERT: Potential Password Spray detected from {ip_address}")
-            print(f"    Targeted users: {list(attempts_tracker[ip_address])}")
+            print(f"Targeted users: {list(attempts_tracker[ip_address])}")
             return True
+
     return False
 
 
-events = [
-    ("192.168.1.50", "admin", "FAILED"),
-    ("192.168.1.50", "user1", "FAILED"),
-    ("192.168.1.50", "guest", "FAILED"),
-    ("192.168.1.50", "hr_manager", "FAILED"),
-    ("192.168.1.50", "it_support", "FAILED"), 
-]
+def analyze_log_file(file_path):
+    """
+    Reads log file and analyzes login events.
+    """
+    try:
+        with open(file_path, "r") as file:
+            for line in file:
+                parts = line.strip().split(",")
 
-for ip, user, stat in events:
-    process_login_event(ip, user, stat)
+                if len(parts) != 3:
+                    continue
+
+                ip, username, status = parts
+                process_login_event(ip, username, status)
+
+    except FileNotFoundError:
+        print("Error: Log file not found.")
+
+
+# Run detection
+log_file = "login_logs.txt"
+analyze_log_file(log_file)
