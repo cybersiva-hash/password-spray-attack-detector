@@ -19,15 +19,17 @@ The system simulates login attempts, analyzes authentication logs, and detects s
 ---
 
 ## Project Structure
-''' text
-password_spray_project/
+```text
+
+Password_Spray_project/
 │
 ├── attack_simulation.py     # Generates login logs
 ├── detection_engine.py      # Detects password spray attacks
 ├── reporting.py             # Displays attack alerts and summary
 ├── login_logs.csv           # Log file containing login attempts
 └── README.md                # Project documentation
-'''
+
+```
 ---
 
 ## Technologies Used
