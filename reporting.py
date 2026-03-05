@@ -4,7 +4,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 LOG_FILE = "login_logs.csv"
-SPRAY_THRESHOLD = 3   # same password used on 3+ users
+SPRAY_THRESHOLD = 3
 
 
 def read_logs():
@@ -84,4 +84,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
