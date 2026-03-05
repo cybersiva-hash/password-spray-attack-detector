@@ -101,7 +101,7 @@ python reporting.py
 
 ---
 
-##Learning Objectives
+## Learning Objectives
 
 - Understand password spray attacks
 - Learn log analysis for security monitoring
